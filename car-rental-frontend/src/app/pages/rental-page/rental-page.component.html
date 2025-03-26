@@ -1,0 +1,23 @@
+<h2>Оренда авто №{{ carId }}</h2>
+
+<form (ngSubmit)="submit()">
+  <label>
+    Початок оренди:
+    <input type="date" [(ngModel)]="start_date" name="start_date" (change)="updatePrice()" required />
+  </label>
+  <br /><br />
+
+  <label>
+    Кінець оренди:
+    <input type="date" [(ngModel)]="end_date" name="end_date" (change)="updatePrice()" required />
+  </label>
+  <br /><br />
+
+  <p *ngIf="pricePerDay">Ціна за день: <strong>{{ pricePerDay }} грн</strong></p>
+  <p *ngIf="totalPrice > 0">Сума за {{ getRentalDays() }} днів: <strong>{{ totalPrice }} грн</strong></p>
+
+  <button type="submit">Орендувати</button>
+</form>
+
+<p style="color:green" *ngIf="message">{{ message }}</p>
+<p style="color:red" *ngIf="error">{{ error }}</p>
