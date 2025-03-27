@@ -1,0 +1,18 @@
+<h2>Мої оренди</h2>
+
+<p *ngIf="error" style="color:red">{{ error }}</p>
+
+<ul *ngIf="rentals.length > 0">
+  <li *ngFor="let rental of rentals">
+    <strong>{{ rental.car_name }}</strong><br />
+    З: {{ rental.start_date }} — по {{ rental.end_date }}<br />
+    Сума: {{ rental.total_price }} грн<br />
+    Статус:
+    <span [style.color]="isPast(rental.end_date) ? 'gray' : 'green'">
+      {{ isPast(rental.end_date) ? 'Завершена' : 'Активна' }}
+    </span>
+    <br /><br />
+  </li>
+</ul>
+
+<p *ngIf="rentals.length === 0 && !error">У вас ще немає оренд.</p>

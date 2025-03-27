@@ -18,4 +18,16 @@ export class RentalService {
   }): Observable<any> {
     return this.http.post(this.apiUrl, rental);
   }
+  getUserRentals(): Observable<any[]> {
+    return this.http.get<any[]>('http://localhost:3000/api/rentals/user/' + this.getUserId());
+  }
+  
+  // (додай допоміжну функцію)
+  getUserId(): number {
+    const token = localStorage.getItem('token');
+    if (!token) return 0;
+  
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.id;
+  }
 }

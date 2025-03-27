@@ -52,7 +52,7 @@ export class RentalPageComponent {
       .subscribe({
         next: () => {
           this.message = 'Оренду оформлено успішно!';
-          setTimeout(() => this.router.navigate(['/cars']));
+          this.router.navigate(['/cars']);
         },
         error: () => {
           this.error = 'Не вдалося оформити оренду';
