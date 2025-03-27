@@ -50,15 +50,17 @@ router.post('/', async (req, res) => {
     year,
     price_per_day,
     image_url,
-    available
+    available,
+    transmission,    
+    passengers,
   } = req.body;
 
   try {
     const [result] = await db.query(
       `INSERT INTO cars 
-      (brand, model, name, fuel_type, engine, year, price_per_day, image_url, available) 
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [brand, model, name, fuel_type, engine, year, price_per_day, image_url, available ?? true]
+      (brand, model, name, fuel_type, engine, year, price_per_day, image_url, available, transmission, passengers) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [brand, model, name, fuel_type, engine, year, price_per_day, image_url, available ?? true, transmission, passengers]
     );
     res.json({ message: 'Автівку додано', carId: result.insertId });
   } catch (err) {
@@ -78,14 +80,16 @@ router.put('/:id', async (req, res) => {
     year,
     price_per_day,
     image_url,
-    available
+    available,
+    transmission,    
+    passengers,
   } = req.body;
 
   try {
     await db.query(
       `UPDATE cars 
        SET brand = ?, model = ?, name = ?, fuel_type = ?, engine = ?, year = ?, 
-           price_per_day = ?, image_url = ?, available = ?
+           price_per_day = ?, image_url = ?, available = ? transmission = ?, passengers = ?
        WHERE id = ?`,
       [brand, model, name, fuel_type, engine, year, price_per_day, image_url, available, carId]
     );

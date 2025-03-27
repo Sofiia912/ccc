@@ -1,20 +1,67 @@
-<h2>Автомобілі</h2>
-
-<p *ngIf="error" style="color:red">{{ error }}</p>
-<ul *ngIf="cars.length > 0">
-    <li *ngFor="let car of cars">
-      <strong>{{ car.name }}</strong> |
-      {{ car.brand }} {{ car.model }} |
-      {{ car.price_per_day }} грн/день
-      <br />
-      <ng-container *ngIf="car.available; else unavailable">
-        <a [routerLink]="['/rent', car.id]">Орендувати</a>
-      </ng-container>
-      <ng-template #unavailable>
-        <span style="color: gray;">Недоступне</span>
-      </ng-template>
-    </li>
-  </ul>
+<div class="car-rental-container">
+    <div *ngIf="error" class="error-message">
+        {{ error }}
+    </div>
   
+    <div *ngIf="cars.length === 0 && !error" class="empty-state">
+        <img src="/assets/no-cars.svg" alt="Немає доступних автівок">
+        <p>Наразі немає доступних автівок</p>
+    </div>
+  
+    <div class="car-grid" *ngIf="cars.length > 0">
+        <div *ngFor="let car of cars" class="car-card">
+            <div class="car-image">
+                <img [src]="car.image_url" [alt]="car.brand + ' ' + car.model">
+                <div class="car-status" *ngIf="!car.available">Зайнято</div>
+            </div>
+  
+            <div class="car-info">
+                <h2>{{ car.brand }} {{ car.model }}</h2>
+                
+                <div class="car-details-grid">
+                    <div class="car-detail">
+                        <i class="fas fa-calendar"></i>
+                        <span>Рік</span>
+                        <strong>{{ car.year }}</strong>
+                    </div>
+                    <div class="car-detail">
+                        <i class="fas fa-car-side"></i>
+                        <span>Двигун</span>
+                        <strong>{{ car.engine }}</strong>
+                    </div>
+                    <div class="car-detail">
+                        <i class="fas fa-gas-pump"></i>
+                        <span>Паливо</span>
+                        <strong>{{ car.fuel_type }}</strong>
+                    </div>
+                    <div class="car-detail">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>КПП</span>
+                        <strong>{{ car.transmission }}</strong>
+                    </div>
+                    <div class="car-detail">
+                        <i class="fas fa-users"></i>
+                        <span>Пасажири</span>
+                        <strong>{{ car.passengers }}</strong>
+                    </div>
+                </div>
+                
+                <div class="car-price">
+                    <span>Ціна оренди:</span>
+                    <strong>{{ car.price_per_day }} грн/день</strong>
+                </div>
+            </div>
+  
+            <button 
+                *ngIf="car.available" 
+                [routerLink]="['/rent', car.id]" 
+                class="rent-button">
+                Орендувати
+            </button>
+            <span *ngIf="!car.available" class="unavailable-button">
+                Недоступно
+            </span>
+        </div>
+    </div>
+</div>
 
-<p *ngIf="cars.length === 0 && !error">Наразі немає доступних автівок.</p>
