@@ -1,0 +1,103 @@
+<h2 class="page-title">Налаштування автопарку</h2>
+
+<div class="tab-buttons">
+  <button [class.active]="selectedTab === 'view'" (click)="setTab('view')">Перегляд авто</button>
+  <button [class.active]="selectedTab === 'add'" (click)="setTab('add')">Додати авто</button>
+  <button [class.active]="showRentals" (click)="loadRentals()">Перегляд усіх оренд</button>
+</div>
+
+<div *ngIf="showCars" class="tab-content">
+  <h3>Усі автівки</h3>
+  <table class="car-table">
+    <thead>
+      <tr>
+        <th>Фото</th>
+        <th>Назва</th>
+        <th>Ціна/день</th>
+        <th>Доступна</th>
+        <th>Дії</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let car of cars">
+        <td><img [src]="car.image_url" width="100" /></td>
+        <td>{{ car.name }}</td>
+        <td>{{ car.price_per_day }} грн</td>
+        <td>{{ car.available ? 'Так' : 'Ні' }}</td>
+        <td>
+          <button class="btn-edit" (click)="startEdit(car)">Редагувати</button>
+          <button class="btn-delete" (click)="deleteCar(car.id)">Видалити</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button (click)="showCars = false" class="close-button">Закрити</button>
+</div>
+
+<div *ngIf="selectedTab === 'add'" class="tab-content">
+  <h3>Додати нову автівку</h3>
+  <form (ngSubmit)="addCar()" class="car-form">
+    <div class="form-row"><label>Назва: <input [(ngModel)]="newCar.name" name="name" required /></label></div>
+    <div class="form-row"><label>Марка: <input [(ngModel)]="newCar.brand" name="brand" required /></label></div>
+    <div class="form-row"><label>Модель: <input [(ngModel)]="newCar.model" name="model" required /></label></div>
+    <div class="form-row"><label>Рік: <input type="number" [(ngModel)]="newCar.year" name="year" required /></label></div>
+    <div class="form-row"><label>Двигун: <input [(ngModel)]="newCar.engine" name="engine" /></label></div>
+    <div class="form-row"><label>КПП: <input [(ngModel)]="newCar.transmission" name="transmission" /></label></div>
+    <div class="form-row"><label>Пальне: <input [(ngModel)]="newCar.fuel_type" name="fuel_type" /></label></div>
+    <div class="form-row"><label>Ціна за день: <input type="number" [(ngModel)]="newCar.price_per_day" name="price_per_day" required /></label></div>
+    <div class="form-row"><label>Фото (URL): <input [(ngModel)]="newCar.image_url" name="image_url" /></label></div>
+    <div class="form-row"><label>Пасажири: <input type="number" [(ngModel)]="newCar.passengers" name="passengers" /></label></div>
+    <div class="form-row checkbox-row">
+      <label>Доступна: <input type="checkbox" [(ngModel)]="newCar.available" name="available" /></label>
+    </div>
+
+    <button type="submit" class="submit-button">Додати</button>
+    <button type="button" (click)="setTab('view')" class="cancel-button">Скасувати</button>
+  </form>
+</div>
+
+<div *ngIf="selectedTab === 'edit' && editCar" class="tab-content">
+  <h3>Редагувати автівку: {{ editCar.name }}</h3>
+  <form (ngSubmit)="updateCar()" class="car-form">
+    <div class="form-row"><label>Назва: <input [(ngModel)]="editCar.name" name="edit_name" required /></label></div>
+    <div class="form-row"><label>Марка: <input [(ngModel)]="editCar.brand" name="edit_brand" required /></label></div>
+    <div class="form-row"><label>Модель: <input [(ngModel)]="editCar.model" name="edit_model" required /></label></div>
+    <div class="form-row"><label>Рік: <input type="number" [(ngModel)]="editCar.year" name="edit_year" required /></label></div>
+    <div class="form-row"><label>Двигун: <input [(ngModel)]="editCar.engine" name="edit_engine" /></label></div>
+    <div class="form-row"><label>КПП: <input [(ngModel)]="editCar.transmission" name="edit_transmission" /></label></div>
+    <div class="form-row"><label>Пальне: <input [(ngModel)]="editCar.fuel_type" name="edit_fuel_type" /></label></div>
+    <div class="form-row"><label>Ціна за день: <input type="number" [(ngModel)]="editCar.price_per_day" name="edit_price" required /></label></div>
+    <div class="form-row"><label>Фото (URL): <input [(ngModel)]="editCar.image_url" name="edit_image" /></label></div>
+    <div class="form-row"><label>Пасажири: <input type="number" [(ngModel)]="editCar.passengers" name="edit_passengers" /></label></div>
+    <div class="form-row checkbox-row">
+      <label>Доступна: <input type="checkbox" [(ngModel)]="editCar.available" name="edit_available" /></label>
+    </div>
+
+    <button type="submit" class="submit-button">Зберегти</button>
+    <button type="button" (click)="setTab('view')" class="cancel-button">Скасувати</button>
+  </form>
+</div>
+
+<div *ngIf="showRentals" class="tab-content rentals-view">
+  <h3>Усі оренди</h3>
+  <table class="rental-table">
+    <thead>
+      <tr>
+        <th>Користувач</th>
+        <th>Авто</th>
+        <th>Період</th>
+        <th>Сума</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let r of rentals">
+        <td>{{ r.first_name }} {{ r.last_name }}</td>
+        <td>{{ r.car_name }}</td>
+        <td>{{ r.start_date | date: 'dd.MM.yyyy' }} – {{ r.end_date | date: 'dd.MM.yyyy' }}</td>
+        <td>{{ r.total_price }} грн</td>
+      </tr>
+    </tbody>
+  </table>
+  <button (click)="showRentals = false" class="close-button">Закрити</button>
+</div>

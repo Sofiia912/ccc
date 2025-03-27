@@ -13,7 +13,18 @@ export class CarService {
   getAllCars(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
+  deleteCar(id: number): Observable<any> {
+    return this.http.delete(`http://localhost:3000/api/cars/${id}`);
+  }
   getCarById(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}`);
   }
+  
+  addCar(car: any): Observable<any> {
+    return this.http.post('http://localhost:3000/api/cars', car);
+  }
+  updateCar(id: number, car: any): Observable<any> {
+    return this.http.put(`http://localhost:3000/api/cars/${id}`, car);
+  }
+  
 }

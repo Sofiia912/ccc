@@ -81,7 +81,7 @@ router.put('/:id', async (req, res) => {
     price_per_day,
     image_url,
     available,
-    transmission,    
+    transmission,
     passengers,
   } = req.body;
 
@@ -89,15 +89,16 @@ router.put('/:id', async (req, res) => {
     await db.query(
       `UPDATE cars 
        SET brand = ?, model = ?, name = ?, fuel_type = ?, engine = ?, year = ?, 
-           price_per_day = ?, image_url = ?, available = ? transmission = ?, passengers = ?
+           price_per_day = ?, image_url = ?, available = ?, transmission = ?, passengers = ?
        WHERE id = ?`,
-      [brand, model, name, fuel_type, engine, year, price_per_day, image_url, available, carId]
+      [brand, model, name, fuel_type, engine, year, price_per_day, image_url, available, transmission, passengers, carId]
     );
     res.json({ message: 'Автівку оновлено' });
   } catch (err) {
     res.status(500).json({ error: 'Помилка при оновленні автівки' });
   }
 });
+
 
 // Видалити автівку
 router.delete('/:id', async (req, res) => {

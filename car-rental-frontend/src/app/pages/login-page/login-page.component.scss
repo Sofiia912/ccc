@@ -1,9 +1,9 @@
 // Color variables
 $primary-color: #28a7fc;
-$secondary-color: #f19101;
-$background-color: #f4f3ee;
+$secondary-color: #0169f1;
+$background-color: #ffffff;
 $text-color: #333;
-$input-border-color: #ddd;
+$input-border-color: #d1caca;
 
 // Mixins for reusable styles
 @mixin flex-center {
@@ -32,7 +32,7 @@ $input-border-color: #ddd;
   .login-form {
     background-color: white;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.252);
     width: 100%;
     max-width: 400px;
     padding: 40px;

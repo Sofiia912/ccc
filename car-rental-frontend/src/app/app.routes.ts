@@ -5,6 +5,7 @@ import { RentalPageComponent } from './pages/rental-page/rental-page.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { MyRentalsPageComponent } from './pages/my-rentals-page/my-rentals-page.component';
 import { authGuard } from './guards/auth.guard';
+import { SettingsPageComponent } from './pages/settings-page/settings-page.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginPageComponent },
@@ -12,5 +13,6 @@ export const routes: Routes = [
     { path: 'cars', component: CarListPageComponent }, // доступна всім
     { path: 'rent/:carId', component: RentalPageComponent, canActivate: [authGuard] },
     { path: 'my-rentals', component: MyRentalsPageComponent, canActivate: [authGuard] },
+    { path: 'settings', component: SettingsPageComponent },
     { path: '', redirectTo: 'cars', pathMatch: 'full' }
 ];
