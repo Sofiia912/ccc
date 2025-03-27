@@ -1,18 +1,21 @@
-<h2>Мої оренди</h2>
+<div class="profile-container" *ngIf="user">
+  <div class="user-info">
+    <h2><i class="fas fa-user-circle"></i> {{ user.first_name }} {{ user.last_name }}</h2>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+  </div>
 
-<p *ngIf="error" style="color:red">{{ error }}</p>
+  <div class="rentals-list" *ngIf="rentals.length > 0; else noRentals">
+    <h3>Ваші оренди:</h3>
+    <ul>
+      <li *ngFor="let r of rentals">
+        🚗 Авто №{{ r.car_id }} | З {{ r.start_date }} по {{ r.end_date }} — 
+        <strong>{{ r.total_price }} грн</strong> 
+        <span *ngIf="isPast(r.end_date)" style="color: gray">(Завершена)</span>
+      </li>
+    </ul>
+  </div>
 
-<ul *ngIf="rentals.length > 0">
-  <li *ngFor="let rental of rentals">
-    <strong>{{ rental.car_name }}</strong><br />
-    З: {{ rental.start_date }} — по {{ rental.end_date }}<br />
-    Сума: {{ rental.total_price }} грн<br />
-    Статус:
-    <span [style.color]="isPast(rental.end_date) ? 'gray' : 'green'">
-      {{ isPast(rental.end_date) ? 'Завершена' : 'Активна' }}
-    </span>
-    <br /><br />
-  </li>
-</ul>
-
-<p *ngIf="rentals.length === 0 && !error">У вас ще немає оренд.</p>
+  <ng-template #noRentals>
+    <p>У вас поки що немає оренд 😢</p>
+  </ng-template>
+</div>

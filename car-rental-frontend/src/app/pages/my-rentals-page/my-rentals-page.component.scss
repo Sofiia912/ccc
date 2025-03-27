@@ -1,0 +1,28 @@
+.profile-container {
+    background: #fdfdfd;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 700px;
+    margin: auto;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  }
+  
+  .user-info {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+  }
+  
+  .rentals-list ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .rentals-list li {
+    background: #fff;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    border-radius: 6px;
+  }
+  

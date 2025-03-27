@@ -47,4 +47,11 @@ export class AuthService {
   isLoggedIn(): boolean {
     return !!this.getToken();
   }
+  getUserInfo(): Observable<any> {
+    const token = this.getToken();
+    const headers = {
+      Authorization: `Bearer ${token}`
+    };
+    return this.http.get(`${this.apiUrl}/me`, { headers });
+  }
 }

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RentalService } from '../../services/rental.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-my-rentals-page',
+  selector: 'my-rentals',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './my-rentals-page.component.html',
@@ -11,11 +12,22 @@ import { RentalService } from '../../services/rental.service';
 })
 export class MyRentalsPageComponent implements OnInit {
   rentals: any[] = [];
+  user: any = null;
   error = '';
 
-  constructor(private rentalService: RentalService) {}
+  constructor(
+    private rentalService: RentalService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
+    // отримуємо користувача
+    this.authService.getUserInfo().subscribe({
+      next: (userData) => this.user = userData,
+      error: () => console.warn('Не вдалося отримати дані користувача')
+    });
+
+    // отримуємо оренди
     this.rentalService.getUserRentals().subscribe({
       next: (data) => (this.rentals = data),
       error: () => (this.error = 'Не вдалося завантажити оренди')

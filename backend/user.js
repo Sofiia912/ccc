@@ -4,6 +4,18 @@ const db = require('./db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1]; // Bearer <token>
+
+  if (!token) return res.status(401).json({ error: 'Токен не надано' });
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) return res.status(403).json({ error: 'Недійсний токен' });
+    req.user = user;
+    next();
+  });
+}
 // Отримати всіх користувачів
 router.get('/', async (req, res) => {
   try {
@@ -73,6 +85,22 @@ router.post('/login', async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ error: 'Помилка при вході' });
+  }
+});
+router.get('/me', authenticateToken, async (req, res) => {
+  try {
+    const [users] = await db.query(
+      'SELECT id, first_name, last_name, email FROM users WHERE id = ?',
+      [req.user.id]
+    );
+
+    if (users.length === 0) {
+      return res.status(404).json({ error: 'Користувача не знайдено' });
+    }
+
+    res.json(users[0]);
+  } catch (err) {
+    res.status(500).json({ error: 'Помилка при отриманні даних користувача' });
   }
 });
 
