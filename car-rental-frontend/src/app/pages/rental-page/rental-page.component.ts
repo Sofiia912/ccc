@@ -20,6 +20,9 @@ export class RentalPageComponent {
   message = '';
   error = '';
   totalPrice = 0;
+  showToast = false;
+
+  car: any = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,10 +31,12 @@ export class RentalPageComponent {
     private carService: CarService
   ) {
     this.carId = Number(this.route.snapshot.paramMap.get('carId'));
+
     this.carService.getCarById(this.carId).subscribe({
-      next: (car) => {
-        this.pricePerDay = car.price_per_day;
-      },
+    next: (car) => {
+      this.car = car;
+      this.pricePerDay = car.price_per_day;
+    },
       error: () => {
         this.error = 'Не вдалося отримати інформацію про авто';
       }
@@ -41,7 +46,7 @@ export class RentalPageComponent {
   submit() {
     const days = this.getRentalDays();
     const total_price = days * this.pricePerDay;
-
+  
     this.rentalService
       .createRental({
         car_id: this.carId,
@@ -52,14 +57,21 @@ export class RentalPageComponent {
       .subscribe({
         next: () => {
           this.message = 'Оренду оформлено успішно!';
-          this.router.navigate(['/cars']);
+          this.error = '';
+          this.showToast = true;
+  
+          setTimeout(() => {
+            this.showToast = false;
+            this.router.navigate(['/my-rentals']);
+          }, 2600); 
         },
         error: () => {
           this.error = 'Не вдалося оформити оренду';
+          this.message = '';
+          this.showToast = false;
         }
       });
   }
-
   getRentalDays(): number {
     const start = new Date(this.start_date);
     const end = new Date(this.end_date);

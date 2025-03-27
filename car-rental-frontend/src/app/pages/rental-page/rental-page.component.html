@@ -1,23 +1,130 @@
-<h2>Оренда авто №{{ carId }}</h2>
+<div class="car-rental-container">
+  <h2 class="page-title">Оренда авто</h2>
 
-<form (ngSubmit)="submit()">
-  <label>
-    Початок оренди:
-    <input type="date" [(ngModel)]="start_date" name="start_date" (change)="updatePrice()" required />
-  </label>
-  <br /><br />
+  <ng-container *ngIf="car; else loading">
+    <div class="car-details-container">
+      <div class="car-image-section">
+        <img [src]="car.image_url" alt="Фото автомобіля" class="car-image">
+      </div>
 
-  <label>
-    Кінець оренди:
-    <input type="date" [(ngModel)]="end_date" name="end_date" (change)="updatePrice()" required />
-  </label>
-  <br /><br />
+      <div class="car-info-section">
+        <div class="car-details-grid">
+          <div class="car-detail">
+            <i class="fas fa-calendar"></i>
+            <span>Рік</span>
+            <strong>{{ car.year }}</strong>
+          </div>
+          <div class="car-detail">
+            <i class="fas fa-car-side"></i>
+            <span>Двигун</span>
+            <strong>{{ car.engine }}</strong>
+          </div>
+          <div class="car-detail">
+            <i class="fas fa-gas-pump"></i>
+            <span>Паливо</span>
+            <strong>{{ car.fuel_type }}</strong>
+          </div>
+          <div class="car-detail">
+            <i class="fas fa-exchange-alt"></i>
+            <span>КПП</span>
+            <strong>{{ car.transmission }}</strong>
+          </div>
+          <div class="car-detail">
+            <i class="fas fa-users"></i>
+            <span>Пасажири</span>
+            <strong>{{ car.passengers }}</strong>
+          </div>
+        </div>
 
-  <p *ngIf="pricePerDay">Ціна за день: <strong>{{ pricePerDay }} грн</strong></p>
-  <p *ngIf="totalPrice > 0">Сума за {{ getRentalDays() }} днів: <strong>{{ totalPrice }} грн</strong></p>
+        <div class="car-specifications">
+          <div class="spec-row">
+            <div class="spec-label">Назва:</div>
+            <div class="spec-value">{{ car.name }}</div>
+          </div>
+          <div class="spec-row">
+            <div class="spec-label">Ціна за день:</div>
+            <div class="spec-value">{{ car.price_per_day }} грн</div>
+          </div>
+          <div class="spec-row">
+            <div class="spec-label">Статус:</div>
+            <div 
+              class="spec-value availability" 
+              [ngClass]="{'available': car.available, 'unavailable': !car.available}"
+            >
+              {{ car.available ? 'Доступний' : 'Зайнятий' }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <button type="submit">Орендувати</button>
-</form>
+    <div class="rental-form-section">
+      <form (ngSubmit)="submit()" #rentalForm="ngForm">
+        <div class="form-group">
+          <label for="start-date">
+            <i class="fas fa-calendar-alt"></i> Початок оренди
+          </label>
+          <input 
+            type="date" 
+            id="start-date"
+            [(ngModel)]="start_date" 
+            name="start_date" 
+            (change)="updatePrice()" 
+            required
+          >
+        </div>
 
-<p style="color:green" *ngIf="message">{{ message }}</p>
-<p style="color:red" *ngIf="error">{{ error }}</p>
+        <div class="form-group">
+          <label for="end-date">
+            <i class="fas fa-calendar-alt"></i> Кінець оренди
+          </label>
+          <input 
+            type="date" 
+            id="end-date"
+            [(ngModel)]="end_date" 
+            name="end_date" 
+            (change)="updatePrice()" 
+            required
+          >
+        </div>
+
+        <div class="rental-summary" *ngIf="totalPrice > 0">
+          <p>
+            <i class="fas fa-calculator"></i> 
+            Всього за {{ getRentalDays() }} дн(і/ів): 
+            <strong>{{ totalPrice }} грн</strong>
+          </p>
+        </div>
+
+        <button 
+          type="submit" 
+          class="submit-btn" 
+          [disabled]="getRentalDays() <= 0 || !rentalForm.valid"
+        >
+          <i class="fas fa-car"></i> Орендувати
+        </button>
+      </form>
+
+      <!-- message-container — вже не потрібен тут -->
+<div 
+class="toast-message success-toast" 
+*ngIf="showToast"
+>
+<i class="fas fa-check-circle"></i> {{ message }}
+</div>
+
+<!-- Якщо хочеш залишити помилки внизу — залиш це окремо -->
+<p class="error" *ngIf="error">
+<i class="fas fa-exclamation-triangle"></i> {{ error }}
+</p>
+
+    </div>
+  </ng-container>
+
+  <ng-template #loading>
+    <div class="loading-container">
+      <i class="fas fa-spinner fa-spin"></i>
+      <p>Завантаження даних автомобіля...</p>
+    </div>
+  </ng-template>
+</div>
