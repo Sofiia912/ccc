@@ -1,0 +1,180 @@
+// Modern Color Palette
+$primary-color: #000000;
+$secondary-color: #50c878;
+$background-color: #f0f4f8;
+$text-color: #2c3e50;
+$input-border-color: #bdc3c7;
+$error-color: #e74c3c;
+$success-color: #2ecc71;
+$white: #ffffff;
+
+// Mixins for Reusable Styles
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin transition-smooth {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@mixin card-shadow {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08), 0 6px 12px rgba(0,0,0,0.06);
+}
+
+// Global Reset and Base Styles
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.registration-container {
+  @include flex-center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, $background-color 0%, lighten($background-color, 5%) 100%);
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  padding: 20px;
+}
+
+form {
+  width: 70%;
+  max-width: 450px;
+  background-color: $white;
+  padding: 40px;
+  border-radius: 12px;
+  @include card-shadow;
+  
+  h2 {
+    text-align: center;
+    color: $primary-color;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    font-weight: 700;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 4px;
+      background-color: $primary-color;
+      border-radius: 2px;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+    position: relative;
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: $text-color;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid $input-border-color;
+      border-radius: 8px;
+      background-color: lighten($background-color, 3%);
+      font-size: 1rem;
+      @include transition-smooth;
+
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+        box-shadow: 0 0 0 3px rgba($primary-color, 0.2);
+      }
+
+      &::placeholder {
+        color: lighten($text-color, 40%);
+      }
+    }
+
+    .error-message {
+      color: $error-color;
+      font-size: 0.8rem;
+      margin-top: 6px;
+      animation: fadeIn 0.3s ease;
+
+      small {
+        display: block;
+        margin-bottom: 3px;
+      }
+    }
+  }
+
+  button {
+    width: 100%;
+    padding: 14px;
+    background-color: $primary-color;
+    color: $white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    @include transition-smooth;
+    
+    &:hover:not(:disabled) {
+      background-color: darken($primary-color, 10%);
+      transform: translateY(-2px);
+      @include card-shadow;
+    }
+
+    &:disabled {
+      background-color: lighten($input-border-color, 10%);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    &:active:not(:disabled) {
+      transform: scale(0.98);
+    }
+  }
+
+  .form-messages {
+    margin-top: 20px;
+    text-align: center;
+
+    .success-message {
+      color: $success-color;
+      font-weight: 500;
+    }
+
+    .error-message {
+      color: $error-color;
+      font-weight: 500;
+    }
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  from { 
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive Adjustments
+@media screen and (max-width: 480px) {
+  form {
+    width: 100%;
+    padding: 25px;
+    margin: 0 10px;
+  }
+}

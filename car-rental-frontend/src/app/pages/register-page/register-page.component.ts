@@ -18,10 +18,16 @@ export class RegisterPageComponent {
   password = '';
   error = '';
   message = '';
+  confirmPassword = '';
+
 
   constructor(private authService: AuthService, private router: Router) {}
 
   register() {
+    if (this.password !== this.confirmPassword) {
+      this.error = 'Паролі не збігаються';
+      return;
+    }
     // Викликаємо метод register із AuthService
     this.authService.register({
       first_name: this.first_name,
@@ -35,6 +41,7 @@ export class RegisterPageComponent {
         this.last_name = '';
         this.email = '';
         this.password = '';
+        this.confirmPassword = '';
         this.router.navigate(['/login']);
       }
       ,
