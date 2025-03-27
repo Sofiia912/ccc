@@ -52,7 +52,7 @@ router.get('/user/:userId', auth, async (req, res) => {
 
   try {
     const [rentals] = await db.query(
-      `SELECT rentals.*, cars.name AS car_name
+      `SELECT rentals.*, cars.name AS car_name, cars.image_url
        FROM rentals
        JOIN cars ON rentals.car_id = cars.id
        WHERE rentals.user_id = ?`,

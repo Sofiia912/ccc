@@ -6,13 +6,34 @@
 
   <div class="rentals-list" *ngIf="rentals.length > 0; else noRentals">
     <h3>Ваші оренди:</h3>
-    <ul>
-      <li *ngFor="let r of rentals">
-        🚗 Авто №{{ r.car_id }} | З {{ r.start_date }} по {{ r.end_date }} — 
-        <strong>{{ r.total_price }} грн</strong> 
-        <span *ngIf="isPast(r.end_date)" style="color: gray">(Завершена)</span>
-      </li>
-    </ul>
+
+    <div class="rental-cards">
+      <div class="rental-card" *ngFor="let r of rentals">
+        <div class="car-image-box">
+          <img [src]="r.image_url" alt="Фото авто" />
+        </div>
+
+        <div class="car-info-box">
+          <h4>{{ r.car_name }}</h4>
+          <p>
+            <strong>Період:</strong> 
+            {{ r.start_date | date: 'dd.MM.yyyy' }} – {{ r.end_date | date: 'dd.MM.yyyy' }}
+          </p>
+          <p><strong>Сума:</strong> {{ r.total_price }} грн</p>
+          <p>
+            <strong>Статус:</strong>
+            <span 
+              [ngClass]="{ 
+                'status-done': isPast(r.end_date), 
+                'status-active': !isPast(r.end_date) 
+              }"
+            >
+              {{ isPast(r.end_date) ? 'Завершена' : 'Активна' }}
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 
   <ng-template #noRentals>

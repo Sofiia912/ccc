@@ -1,21 +1,27 @@
 <nav class="main-nav">
   <div class="nav-left">
-    <a routerLink="/cars" class="logo">AutoRent</a>
+    <a routerLink="/cars" class="logo" aria-label="AutoRent Home">AutoRent</a>
   </div>
-
+  
   <div class="nav-right">
-    <a routerLink="/cars">Автомобілі</a>
+    <a routerLink="/cars" aria-label="Browse Cars">Автомобілі</a>
+    
     <ng-container *ngIf="auth.isLoggedIn(); else guestLinks">
-      <a routerLink="/my-rentals" class="user-icon" title="Мій профіль">
-        <i class="fas fa-user-circle"></i>
+      <a routerLink="/my-rentals" class="user-icon" title="Мій профіль" aria-label="User Profile">
+        <i class="fas fa-user-circle" aria-hidden="true"></i>
       </a>
-      <button (click)="logout()" class="logout-btn">Вийти</button>
+      <button 
+        (click)="logout()" 
+        class="logout-btn" 
+        aria-label="Log Out"
+      >
+        Вийти
+      </button>
     </ng-container>
-
+    
     <ng-template #guestLinks>
-      <a routerLink="/login">Увійти</a>
-      <a routerLink="/register">Реєстрація</a>
+      <a routerLink="/login" aria-label="Login">Увійти</a>
+      <a routerLink="/register" aria-label="Register">Реєстрація</a>
     </ng-template>
   </div>
 </nav>
-

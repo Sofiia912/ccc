@@ -1,49 +1,106 @@
-.main-nav {
+// Modern dark color palette with Sass variables
+$primary-color: #2563eb;     // Vibrant blue
+$secondary-color: #f4f4f4;      // Emerald green
+$accent-color: #f97316;      // Vibrant orange
+$background-dark: #121212;   // Deep black
+$text-light: #f4f4f4;        // Off-white
+
+// Advanced mixins
+@mixin flex-between {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 12px 24px;
-  background-color: #222;
-  color: #fff;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  justify-content: space-between;
 }
 
-.nav-left .logo {
-  font-size: 20px;
-  font-weight: bold;
-  color: #fff;
-  text-decoration: none;
+@mixin smooth-transition {
+  transition: all 0.3s ease-in-out;
 }
 
-.nav-right a,
-.nav-right .logout-btn {
-  color: #fff;
-  margin-left: 16px;
-  text-decoration: none;
-  background: none;
-  border: none;
-  font-size: 15px;
-  cursor: pointer;
-  transition: color 0.2s;
-}
+.main-nav {
+  @include flex-between;
+  background-color: $background-dark;
+  color: $text-light;
+  padding: 1rem 3rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  
+  .nav-left {
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: $secondary-color;
+      text-decoration: none;
+      letter-spacing: -1px;
+      @include smooth-transition;
 
-.nav-right a:hover,
-.nav-right .logout-btn:hover {
-  color: #ffd700;
-}
+      &:hover {
+        transform: scale(1.05);
+        color: $accent-color;
+      }
+    }
+  }
 
-.logout-btn {
-  padding: 4px 10px;
-  border-radius: 4px;
-}
-.user-icon {
-  font-size: 22px;
-  margin-right: 12px;
-  color: #fff;
-  transition: color 0.2s;
-}
-.user-icon:hover {
-  color: #ffd700;
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+
+    > * {
+      @include smooth-transition;
+      text-decoration: none;
+      color: $text-light;
+      font-weight: 600;
+      
+      &:hover {
+        color: $secondary-color;
+        transform: translateY(-2px);
+      }
+    }
+
+    .user-icon {
+      font-size: 1.8rem;
+      color: $secondary-color;
+      
+      &:hover {
+        transform: scale(1.2) rotate(15deg);
+        color: $accent-color;
+      }
+    }
+
+    .logout-btn {
+      background-color: $secondary-color;
+      color: $background-dark;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      
+      &:hover {
+        background-color: $accent-color;
+        transform: translateY(-3px);
+        box-shadow: 0 4px 6px rgba(255,255,255,0.1);
+      }
+
+      &:active {
+        transform: translateY(1px);
+        box-shadow: none;
+      }
+    }
+  }
+
+  // Responsive Design
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+
+    .nav-left, .nav-right {
+      width: 100%;
+      text-align: center;
+    }
+
+    .nav-right {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
 }

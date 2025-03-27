@@ -2,13 +2,13 @@
 
 // Enhanced Color Palette
 $primary-color: #000000;
-$secondary-color: #2c3e50;
-$accent-color: #34a853;
+$secondary-color: #f97316;
+$accent-color: #31d75d;
 $error-color: #ea4335;
 $background-color: #f7f9fc;
-$text-color:  #333;
-$border-color: #dadce0;
-$icon-color: #5f6368;
+$text-color:  #f97316;
+$border-color: #f97316;
+$icon-color: #333;
 
 // Improved Mixins
 @mixin flex-center {
@@ -18,7 +18,7 @@ $icon-color: #5f6368;
 }
 
 @mixin card-shadow {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08), 0 2px 5px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 10px rgba(44, 33, 26, 0.232), 0 2px 5px rgba(146, 95, 38, 0.221);
   border-radius: 12px;
 }
 
@@ -186,7 +186,7 @@ $icon-color: #5f6368;
       }
 
       input[type="date"] {
-        width: 100%;
+        width: 97%;
         padding: 12px;
         border: 1px solid $border-color;
         border-radius: 8px;
@@ -196,7 +196,7 @@ $icon-color: #5f6368;
         &:focus {
           outline: none;
           border-color: $primary-color;
-          box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.15);
+          box-shadow: 0 0 0 3px rgba(232, 136, 26, 0.15);
         }
       }
     }
