@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('./db');
 
-// Отримати всі авто (з автоматичним поверненням)
+// Отримати всі авто 
 router.get('/', async (req, res) => {
   try {
     // Автоматично повертаємо автівки, якщо дата оренди минула

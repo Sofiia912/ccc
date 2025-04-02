@@ -16,6 +16,7 @@ function authenticateToken(req, res, next) {
     next();
   });
 }
+
 // Отримати всіх користувачів
 router.get('/', async (req, res) => {
   try {

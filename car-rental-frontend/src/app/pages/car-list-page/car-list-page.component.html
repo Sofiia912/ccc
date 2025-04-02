@@ -6,7 +6,9 @@
     <div *ngIf="cars.length === 0 && !error" class="empty-state">
         <p>Наразі немає доступних автівок</p>
     </div>
-  
+  <div class="location">
+    <h3 class="fas fa-location-dot"> вул. Любінська, 196, Львів</h3>
+  </div>
     <div class="car-grid" *ngIf="cars.length > 0">
         <div *ngFor="let car of cars" class="car-card">
             <div class="car-image">

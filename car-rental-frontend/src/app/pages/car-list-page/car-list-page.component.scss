@@ -11,16 +11,16 @@ $transition: all 0.25s ease;
 
 .car-rental-container {
   background-color: $light-bg;
-  min-height: 150vh;
-  padding: 20px;
+  min-height: 140vh;
+  padding: 10px;
 
   // Error Message Styling
   .error-message {
-    background-color: #{$accent-color}1A; // Slightly transparent accent color
+    background-color: #{$accent-color}1A; 
     color: $accent-color;
     border: 1px solid $accent-color;
     border-radius: $border-radius;
-    padding: 15px;
+    padding: 10px;
     margin-bottom: 20px;
     text-align: center;
     font-weight: 600;
@@ -83,7 +83,7 @@ $transition: all 0.25s ease;
           position: absolute;
           top: 15px;
           right: 15px;
-          background-color: #{$accent-color}CC; // Slightly transparent
+          background-color: #{$accent-color}CC; 
           color: white;
           padding: 5px 10px;
           border-radius: 4px;

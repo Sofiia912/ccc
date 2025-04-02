@@ -22,7 +22,6 @@ export class RentalService {
     return this.http.get<any[]>('http://localhost:3000/api/rentals/user/' + this.getUserId());
   }
   
-  // (додай допоміжну функцію)
   getUserId(): number {
     const token = localStorage.getItem('token');
     if (!token) return 0;

@@ -39,8 +39,6 @@
   <h3>Додати нову автівку</h3>
   <form (ngSubmit)="addCar()" class="car-form">
     <div class="form-row"><label>Назва: <input [(ngModel)]="newCar.name" name="name" required /></label></div>
-    <div class="form-row"><label>Марка: <input [(ngModel)]="newCar.brand" name="brand" required /></label></div>
-    <div class="form-row"><label>Модель: <input [(ngModel)]="newCar.model" name="model" required /></label></div>
     <div class="form-row"><label>Рік: <input type="number" [(ngModel)]="newCar.year" name="year" required /></label></div>
     <div class="form-row"><label>Двигун: <input [(ngModel)]="newCar.engine" name="engine" /></label></div>
     <div class="form-row"><label>КПП: <input [(ngModel)]="newCar.transmission" name="transmission" /></label></div>
@@ -61,8 +59,6 @@
   <h3>Редагувати автівку: {{ editCar.name }}</h3>
   <form (ngSubmit)="updateCar()" class="car-form">
     <div class="form-row"><label>Назва: <input [(ngModel)]="editCar.name" name="edit_name" required /></label></div>
-    <div class="form-row"><label>Марка: <input [(ngModel)]="editCar.brand" name="edit_brand" required /></label></div>
-    <div class="form-row"><label>Модель: <input [(ngModel)]="editCar.model" name="edit_model" required /></label></div>
     <div class="form-row"><label>Рік: <input type="number" [(ngModel)]="editCar.year" name="edit_year" required /></label></div>
     <div class="form-row"><label>Двигун: <input [(ngModel)]="editCar.engine" name="edit_engine" /></label></div>
     <div class="form-row"><label>КПП: <input [(ngModel)]="editCar.transmission" name="edit_transmission" /></label></div>

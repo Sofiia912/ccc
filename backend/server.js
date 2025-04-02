@@ -18,5 +18,5 @@ app.use('/api/rentals', rentalRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 Сервер працює на http://localhost:${PORT}`);
+  console.log(`Сервер працює на http://localhost:${PORT}`);
 });

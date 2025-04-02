@@ -25,7 +25,7 @@ export class SettingsPageComponent implements OnInit {
     name: '',
     fuel_type: '',
     engine: '',
-    year: 2024,
+    year: 2025,
     price_per_day: 0,
     image_url: '',
     available: true,
